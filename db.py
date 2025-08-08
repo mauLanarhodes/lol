@@ -3,7 +3,10 @@ import hashlib
 from datetime import datetime
 
 # --- SQLite DB file ---
-DB_FILE = 'logs.db'
+import os
+
+DB_FILE = r"C:/AuditData/logs.db"
+
 
 # --- Connect to DB ---
 def get_db():
