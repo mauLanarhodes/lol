@@ -52,6 +52,8 @@ def verify_logs():
         "message": "All logs are intact and verified."
     }), 200
 
+
+
 if __name__ == '__main__':
     init_db()  # Ensure DB is initialized before starting the app
     app.run(debug=True)

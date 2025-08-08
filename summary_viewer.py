@@ -2,7 +2,7 @@ import sqlite3
 from collections import defaultdict
 from tabulate import tabulate
 
-DB_FILE = 'logs.db'
+DB_FILE = r"C:\AuditData\logs.db"
 
 def fetch_logs():
     conn = sqlite3.connect(DB_FILE)
