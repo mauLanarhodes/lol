@@ -94,6 +94,46 @@ def get_foreground_info():
     except Exception:
         return None
 
+# --- Lock/Unlock poller fallback (no WMI required) ---
+import win32con
+
+def _is_workstation_locked() -> bool:
+    """
+    Returns True if the workstation is locked (Win+L), False otherwise.
+    Uses SwitchDesktop on the input desktop; requires no admin/WMI.
+    """
+    try:
+        hdesk = ctypes.windll.user32.OpenInputDesktop(0, False, win32con.DESKTOP_SWITCHDESKTOP)
+        if not hdesk:
+            # Could not open input desktop; assume unlocked rather than spamming false locks
+            return False
+        try:
+            res = ctypes.windll.user32.SwitchDesktop(hdesk)
+            # SwitchDesktop returns 0 if the desktop is locked
+            return res == 0
+        finally:
+            ctypes.windll.user32.CloseDesktop(hdesk)
+    except Exception:
+        return False
+
+def session_lock_poller(interval: float = 0.5):
+    """
+    Polls lock state every `interval` seconds and emits LOCK/UNLOCK to CONTROL_Q
+    whenever the state changes.
+    """
+    last = None
+    while True:
+        locked = _is_workstation_locked()
+        if locked != last:
+            if locked:
+                CONTROL_Q.put(("LOCK", None))
+            else:
+                CONTROL_Q.put(("UNLOCK", None))
+            last = locked
+        time.sleep(interval)
+
+
+
 def fmt_detail(pid, exe, title, path, username="", session_type="", monitors=""):
     parts = [f"pid={pid}", f'exe="{exe}"', f'title="{title}"', f'path="{path}"']
     if username:     parts.append(f'user="{username}"')
