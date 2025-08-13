@@ -3,7 +3,7 @@ import os, time, threading, queue, requests, psutil
 from datetime import datetime
 
 # ====== Config ======
-API_URL = "http://127.0.0.1:5000/log"
+API_URL = "http://127.0.0.1:5000/log-batch"
 API_TOKEN = "supersecrettoken123"
 FLUSH_INTERVAL = 1.0
 POLL_INTERVAL  = 0.15

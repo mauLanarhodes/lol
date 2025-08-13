@@ -52,7 +52,21 @@ def verify_logs():
         "message": "All logs are intact and verified."
     }), 200
 
+@app.route('/log-batch', methods=['POST'])
+@require_token
+def log_batch():
+    data = request.get_json()
+    actions = data.get("actions")
+    if not isinstance(actions, list) or not actions:
+        return jsonify({"error": "Missing or invalid 'actions' field; expected non-empty list"}), 400
 
+    results = []
+    for action in actions:
+        if not isinstance(action, str) or not action.strip():
+            # Skip bad items but continue processing others
+            continue
+        results.append(log_action(action.strip()))
+    return jsonify({"logged": results, "count": len(results)}), 201
 
 if __name__ == '__main__':
     init_db()  # Ensure DB is initialized before starting the app
