@@ -169,12 +169,6 @@ summary_input_activity.py    # Input logger summary tool
 
 ---
 
-## **📜 License**
-
-*(Include your chosen license here, e.g., MIT, Apache 2.0, etc.)*
-
----
-
 ## **🙋 About the Author**
 
 Built by **Shourya Sai Macha**, a Computer Information Systems student passionate about **cybersecurity**, **forensics**, and **system monitoring**.

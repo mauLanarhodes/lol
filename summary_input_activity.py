@@ -3,7 +3,6 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 from html import escape
 
-# Match your existing DB path (db.py / other summaries)
 DB_FILE = r"C:\AuditData\logs.db"
 
 def connect():
@@ -70,7 +69,6 @@ def parse_summary_line(action):
         return None
 
 def parse_events_line(action):
-    # "Input events: {json}"
     try:
         _, j = action.split(":", 1)
         payload = json.loads(j.strip())

@@ -56,7 +56,6 @@ def fetch_rows(args):
         q += " AND timestamp <= ?"
         params.append(until)
     if args.atype:
-        # match action type before colon OR anywhere; keep simple with LIKE
         q += " AND action LIKE ?"
         params.append(f"%{args.atype}%")
     if args.contains:
@@ -69,7 +68,6 @@ def fetch_rows(args):
     return rows
 
 def split_action(row_action):
-    # stored as "Action: detail"
     if ":" in row_action:
         a, d = row_action.split(":", 1)
         return a.strip(), d.strip()

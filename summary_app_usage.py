@@ -2,9 +2,8 @@ import argparse, sqlite3, os, re, csv
 from datetime import datetime, timedelta
 from collections import defaultdict
 
-DB_FILE = r"C:\AuditData\logs.db"  # must match db.py
+DB_FILE = r"C:\AuditData\logs.db"  
 
-# Regex to parse details from "App focus end: pid=... | exe="..." | title="..." | path="..." | ... | duration=12.34s | ..."
 RE_EXE   = re.compile(r'exe="([^"]+)"')
 RE_TITLE = re.compile(r'title="([^"]*)"')
 RE_PATH  = re.compile(r'path="([^"]*)"')
@@ -128,7 +127,6 @@ def main():
         ))
 
     headers = ["Executable", "Window Title" if args.by=="exe+title" else "—", "Sessions", "Total Time", "First Seen", "Last Seen"]
-    # If not grouping by title, drop that column cleanly
     if args.by == "exe":
         headers = ["Executable", "Sessions", "Total Time", "First Seen", "Last Seen"]
         out = [(r[0], r[2], r[3], r[4], r[5]) for r in out]

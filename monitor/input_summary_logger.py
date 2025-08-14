@@ -22,12 +22,7 @@ _running = True
 counts = {"keys": 0, "clicks": 0, "scrolls": 0, "moves": 0}
 interval_started = time.time()
 
-# detailed event list (timestamped)
-# event shape:
-#   key   -> {"t": ISO, "e":"key",   "k":"char" or "enter"/"shift"/"a"... (masked if INCLUDE_KEY_NAMES=False)}
-#   click -> {"t": ISO, "e":"click", "b":"left/right/middle"}
-#   scroll-> {"t": ISO, "e":"scroll","dx":int,"dy":int}
-#   move  -> {"t": ISO, "e":"move"}
+
 events = []
 
 def now_iso():
@@ -65,8 +60,7 @@ def _post_summary(snap_counts, snap_events, started_ts, ended_ts):
     )
     actions = [f"Input summary: {summary_detail}"]
 
-    # 2) detailed action (machine-friendly JSON; compact)
-    #    We nest JSON as a string so it still fits your TEXT 'action' column.
+
     payload = {
         "window": {
             "start": datetime.fromtimestamp(started_ts).isoformat(timespec="milliseconds"),
@@ -104,7 +98,6 @@ def _on_key_press(key):
     # add per-event entry (timestamped)
     name = "char"
     if INCLUDE_KEY_NAMES:
-        # Try best-effort name; DO NOT do this if you want strict privacy
         try:
             name = key.char if key.char else str(key)
         except Exception:

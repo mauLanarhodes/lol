@@ -14,11 +14,9 @@ CONFIG    = os.path.join(os.path.expanduser("~"), ".secure_audit_watcher.json")
 DEBOUNCE_SECS = 0.3                     # de-dupe identical events within this window
 # ------------------------------------------------
 
-# Optional: ignore some noisy system artifacts
 IGNORED_FILENAMES = {"desktop.ini", "thumbs.db"}
 IGNORED_SUFFIXES  = (".tmp", ".crdownload")
 
-# ---- Path normalization / ignore our DB files to prevent loop ----
 def norm(p: str) -> str:
     return os.path.abspath(p).replace("\\", "/").lower()
 
@@ -63,7 +61,6 @@ class Handler(FileSystemEventHandler):
         path = event.src_path
         p = norm(path)
 
-        # Skip our DB + side files (feedback loop guard)
         if p in EXCLUDED:
             return
 
@@ -117,7 +114,6 @@ class Handler(FileSystemEventHandler):
                         f"{event.src_path} -> {event.dest_path}")
             return
 
-        # Ignore everything else (like parent-dir modified noise)
         return
 
 # ---- GUI folder picker (no typing) ----
