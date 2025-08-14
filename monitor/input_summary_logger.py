@@ -10,7 +10,7 @@ from pynput import keyboard, mouse
 API_URL   = "http://127.0.0.1:5000/log-batch"   # Flask batch endpoint
 API_TOKEN = "supersecrettoken123"               # must match server token
 FLUSH_INTERVAL_SEC = 10.0                       # summary + events every N seconds
-COUNT_MOUSE_MOVES  = False                      # set True to include move counts/events (noisy)
+COUNT_MOUSE_MOVES  = True                      # set True to include move counts/events (noisy)
 INCLUDE_KEY_NAMES  = True                      # False = DO NOT send typed characters (privacy)
 MAX_EVENTS_PER_FLUSH = 400                      # safety cap for payload size
 # ====================
@@ -119,17 +119,39 @@ def _on_click(x, y, button, pressed):
         counts["clicks"] += 1
     add_event({"t": now_iso(), "e": "click", "b": str(button).split(".")[-1]})
 
+
+SCROLL_ACCUM = {"units": 0}
+SCROLL_UNIT_THRESHOLD = 1   # treat every 1 unit of |dy| as one 'scroll'
 def _on_scroll(x, y, dx, dy):
+    # accumulate smooth scrolling; count each unit of absolute dy as a "scroll"
     with _lock:
-        counts["scrolls"] += 1
+        SCROLL_ACCUM["units"] += abs(dy)
+        # convert accumulated units into integer ticks
+        ticks = int(SCROLL_ACCUM["units"] // SCROLL_UNIT_THRESHOLD)
+        if ticks > 0:
+            counts["scrolls"] += ticks
+            SCROLL_ACCUM["units"] -= ticks * SCROLL_UNIT_THRESHOLD
     add_event({"t": now_iso(), "e": "scroll", "dx": int(dx), "dy": int(dy)})
+
+
+MOVE_MIN_PIXELS = 1  # count a "move" when cursor shifts by >= this many pixels
+
+_last_pos = [None, None]
 
 def _on_move(x, y):
     if not COUNT_MOUSE_MOVES:
         return
-    with _lock:
-        counts["moves"] += 1
-    add_event({"t": now_iso(), "e": "move"})
+    global _last_pos
+    px, py = _last_pos
+    if px is None:
+        _last_pos = [x, y]
+        return
+    if abs(x - px) >= MOVE_MIN_PIXELS or abs(y - py) >= MOVE_MIN_PIXELS:
+        with _lock:
+            counts["moves"] += 1
+        add_event({"t": now_iso(), "e": "move"})
+        _last_pos = [x, y]
+
 
 def _shutdown():
     global _running
