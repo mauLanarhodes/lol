@@ -19,7 +19,7 @@ This system is designed to address **three key goals**:
 
 The diagram below illustrates the data flow between the **Monitors**, **Flask Backend**, and **Summary Reporting Tools**.
 
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAIAAADwf7zUAAFmZWNhQlgAAWZlanVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAANxNqdW1iAAAA...<truncated>...==" alt="Secure Activity Tracking System Architecture" width="800"/>
+<img src="secure_activity_tracking_flowchart_highres.png"/>
 
 
 
