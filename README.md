@@ -15,6 +15,13 @@ Every entry is cryptographically chained using SHA-256 hashes, making it possibl
 ## **🎯 Project Goals**
 
 This system is designed to address **three key goals**:
+## 📊 System Architecture
+
+The diagram below illustrates the data flow between the **Monitors**, **Flask Backend**, and **Summary Reporting Tools**.
+
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABAAAAAQACAIAAADwf7zUAAFmZWNhQlgAAWZlanVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAANxNqdW1iAAAA...<truncated>...==" alt="Secure Activity Tracking System Architecture" width="800"/>
+
+
 
 1. **🔐 Security & Compliance**
 
