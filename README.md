@@ -1,21 +1,21 @@
-## **📌 Project Overview**
+## **Project Overview**
 
 This project is a **cross-component monitoring system** designed to log and analyze key types of activity on a Windows machine:
 
-1. **📋 Application Usage Tracker** – Records when users switch between apps, tracking how long each app is in focus.
-2. **🔍 File Tracker** – Monitors changes to files and folders (creation, modification, deletion, rename) in real time.
-3. **⌨️ Input Summary Logger** – Counts keystrokes, mouse clicks, scrolls, and movements in aggregate (no raw keystrokes unless explicitly enabled).
-4. **📊 Reporting Tools** – Command-line summary scripts that generate structured usage reports (app usage, file events, input activity), exportable to CSV/HTML for analysis.
+1. **Application Usage Tracker** – Records when users switch between apps, tracking how long each app is in focus.
+2. **File Tracker** – Monitors changes to files and folders (creation, modification, deletion, rename) in real time.
+3. **Input Summary Logger** – Counts keystrokes, mouse clicks, scrolls, and movements in aggregate (no raw keystrokes unless explicitly enabled).
+4. **Reporting Tools** – Command-line summary scripts that generate structured usage reports (app usage, file events, input activity), exportable to CSV/HTML for analysis.
 
 **All events** are sent to a **Flask-based logging backend** that writes them to a **tamper-evident audit log** stored in an SQLite database.
 Every entry is cryptographically chained using SHA-256 hashes, making it possible to verify that no logs have been altered.
 
 ---
 
-## **🎯 Project Goals**
+## **Project Goals**
 
 This system is designed to address **three key goals**:
-## 📊 System Architecture
+## System Architecture
 
 The diagram below illustrates the data flow between the **Monitors**, **Flask Backend**, and **Summary Reporting Tools**.
 
@@ -23,12 +23,12 @@ The diagram below illustrates the data flow between the **Monitors**, **Flask Ba
 
 
 
-1. **🔐 Security & Compliance**
+1. **Security & Compliance**
 
    * Provide verifiable audit trails for environments with strict compliance requirements (e.g., SOC 2, ISO 27001).
    * Tamper-proof log design: Each log entry’s hash depends on the previous entry, so any modification breaks the chain.
 
-2. **📈 Insight & Productivity Analysis**
+2. **Insight & Productivity Analysis**
 
    * Identify application usage patterns, file access trends, and input activity levels.
    * Generate detailed summaries for managers, analysts, or security teams.
@@ -40,7 +40,7 @@ The diagram below illustrates the data flow between the **Monitors**, **Flask Ba
 
 ---
 
-## **⚙️ How It Works**
+## **How It Works**
 
 ### **1. Monitors (Clients)**
 
@@ -101,7 +101,7 @@ The project includes CLI utilities to turn raw logs into actionable insights:
 
 ---
 
-## **🚀 Key Features**
+## **Key Features**
 
 * **Multi-source monitoring**: Apps, files, inputs.
 * **Real-time logging** with minimal overhead.
@@ -114,7 +114,7 @@ The project includes CLI utilities to turn raw logs into actionable insights:
 
 ---
 
-## **🛠 Technologies Used**
+## **Technologies Used**
 
 * **Python** – Core language for monitors, backend, and report generation.
 * **Flask** – Lightweight web server for receiving logs.
@@ -127,7 +127,7 @@ The project includes CLI utilities to turn raw logs into actionable insights:
 
 ---
 
-## **📂 Project Structure**
+## **Project Structure**
 
 ```
 /monitor
@@ -143,7 +143,7 @@ summary_input_activity.py    # Input logger summary tool
 
 ---
 
-## **💡 Example Use Cases**
+## **Example Use Cases**
 
 * **Security & Compliance** – Ensure employees handling sensitive data follow policy; detect anomalous file or app usage.
 * **Productivity Analysis** – Identify top-used applications, time allocation, and workflow patterns.
@@ -152,7 +152,7 @@ summary_input_activity.py    # Input logger summary tool
 
 ---
 
-## **🔒 Privacy Considerations**
+## **Privacy Considerations**
 
 * By default, no actual text typed by the user is stored—only event metadata and counts.
 * Configuration options allow enabling exact key capture **only with explicit consent**.
@@ -160,16 +160,16 @@ summary_input_activity.py    # Input logger summary tool
 
 ---
 
-## **🚧 Future Enhancements**
+## **Future Enhancements**
 
-* 📊 Web dashboard for real-time visualization.
-* 📌 Configurable alert system for suspicious activity.
-* 🔄 Remote sync with central logging server.
-* 📈 ML-based anomaly detection for unusual behavior patterns.
+* Web dashboard for real-time visualization.
+* Configurable alert system for suspicious activity.
+* Remote sync with central logging server.
+* ML-based anomaly detection for unusual behavior patterns.
 
 ---
 
-## **🙋 About the Author**
+## **About the Author**
 
 Built by **Shourya Sai Macha**, a Computer Information Systems student passionate about **cybersecurity**, **forensics**, and **system monitoring**.
 This project demonstrates **full-stack problem-solving** — from low-level OS event capture to secure backend logging and data analytics.
