@@ -33,7 +33,7 @@ The diagram below illustrates the data flow between the **Monitors**, **Flask Ba
    * Identify application usage patterns, file access trends, and input activity levels.
    * Generate detailed summaries for managers, analysts, or security teams.
 
-3. **🛡 Privacy-First Design**
+3. **Privacy-First Design**
 
    * By default, no actual typed content is stored—only aggregated counts and event metadata.
    * Optional modes allow deeper inspection (e.g., exact key presses) **only with explicit configuration**.
